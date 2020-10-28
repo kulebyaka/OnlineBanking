@@ -1,6 +1,3 @@
 # OnlineBanking
 
-## BEST ONLINE BANKING APP EVER
-🪰🪰🪰
-🪲🪲🪲
-🪲🪲🪲
+## :bug:  BEST ONLINE BANKING APP EVER :fountain:
