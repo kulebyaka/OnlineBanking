@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineBanking.API", "OnlineBanking.API\OnlineBanking.API.csproj", "{01C15DC2-6F0C-42D1-AF86-BF428CBC8DBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineBanking.Data", "OnlineBanking.Data\OnlineBanking.Data.csproj", "{21A05B4F-D7F7-4BEC-8DA0-95DF338701CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineBanking.BL", "OnlineBanking.BL\OnlineBanking.BL.csproj", "{A9A7C2C9-5F97-4947-8C8F-665E3EC0A464}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01C15DC2-6F0C-42D1-AF86-BF428CBC8DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C15DC2-6F0C-42D1-AF86-BF428CBC8DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C15DC2-6F0C-42D1-AF86-BF428CBC8DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C15DC2-6F0C-42D1-AF86-BF428CBC8DBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A05B4F-D7F7-4BEC-8DA0-95DF338701CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A05B4F-D7F7-4BEC-8DA0-95DF338701CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A05B4F-D7F7-4BEC-8DA0-95DF338701CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A05B4F-D7F7-4BEC-8DA0-95DF338701CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A7C2C9-5F97-4947-8C8F-665E3EC0A464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A7C2C9-5F97-4947-8C8F-665E3EC0A464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A7C2C9-5F97-4947-8C8F-665E3EC0A464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A7C2C9-5F97-4947-8C8F-665E3EC0A464}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
