@@ -14,8 +14,8 @@ namespace OnlineBanking.BL
             var fakeTransactionRuleSet = new Faker<BankTransactionDto>("en")
                 .RuleFor(u => u.Id, f => f.UniqueIndex)
                 .RuleFor(u => u.Date, f => f.Date.Past())
-                .RuleFor(u => u.Change, f => f.Random.Decimal())
-                .RuleFor(u => u.Currency, f => f.Finance.Currency().Code)
+                .RuleFor(u => u.Change, f => f.Random.Decimal(-1000, 10000))
+                .RuleFor(u => u.Currency, f => $"{f.Finance.Currency().Code} ({f.Finance.Currency().Symbol})")
                 .RuleFor(u => u.GeoCoordinate, f => new GeoCoordinateDto
                 {
                     Latitude = f.Random.Double(),
