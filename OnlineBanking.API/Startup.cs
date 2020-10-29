@@ -22,7 +22,7 @@ namespace OnlineBanking.API
             // Add framework services.
             services.AddControllers();
             // Add application services.
-            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<ITransactionService, MockTransactionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
