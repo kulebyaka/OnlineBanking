@@ -1,0 +1,17 @@
+﻿﻿namespace OnlineBanking.API
+{
+    public static class Constants
+    {
+        public static class Swagger
+        {
+            public static string EndPoint => $"../swagger/{Version}/swagger.json";
+            public static string ApiName => "Bank API";
+            public static string Version => "v1";
+        }
+
+        public static class Health
+        {
+            public static string EndPoint => "/health";
+        }
+    }
+}
