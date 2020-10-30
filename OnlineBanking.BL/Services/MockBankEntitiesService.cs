@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
+using OnlineBanking.BL.Models;
 
-namespace OnlineBanking.BL
+namespace OnlineBanking.BL.Services
 {
-    public class MockTransactionService : ITransactionService
+    public class MockBankEntitiesService : IBankEntitiesService
     {
         private static Faker<BankTransactionDto> FakeTransactionRuleSet()
         {
@@ -28,6 +28,13 @@ namespace OnlineBanking.BL
             return fakeTransactionRuleSet;
         }
         
+        private static Faker<BankCategoryDto> FakeCategoryRuleSet()
+        {
+            var fakeTransactionRuleSet = new Faker<BankCategoryDto>("en")
+                .RuleFor(u => u.Name, f => f.Commerce.Categories(1).First());
+            return fakeTransactionRuleSet;
+        }
+        
         public async Task<BankTransactionDto> GetTransactionAsync(int id, CancellationToken cancellationToken = default)
         {
             var fakeTransactionRuleSet = FakeTransactionRuleSet();
@@ -35,9 +42,24 @@ namespace OnlineBanking.BL
             return transaction;
         }
 
-        public async Task<IList<BankTransactionDto>> GetTransactionListAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<BankTransactionDto>> GetTransactionListAsync(CancellationToken cancellationToken = default)
         {
             var fakeTransactionRuleSet = FakeTransactionRuleSet();
+            var transaction = fakeTransactionRuleSet.Generate(10);
+            return transaction;
+        }
+
+        public async Task<BankCategoryDto> GetCategoryAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var fakeTransactionRuleSet = FakeCategoryRuleSet();
+            var transaction = fakeTransactionRuleSet.Generate(1).First();
+            return transaction;
+            
+        }
+
+        public async Task<IEnumerable<BankCategoryDto>> GetCategoryListAsync(CancellationToken cancellationToken = default)
+        {
+            var fakeTransactionRuleSet = FakeCategoryRuleSet();
             var transaction = fakeTransactionRuleSet.Generate(10);
             return transaction;
         }

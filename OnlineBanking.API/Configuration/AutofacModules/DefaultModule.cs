@@ -1,5 +1,6 @@
 ﻿﻿using Autofac;
 using OnlineBanking.BL;
+ using OnlineBanking.BL.Services;
 
  namespace OnlineBanking.API.Configuration.AutofacModules
 {
@@ -10,7 +11,7 @@ using OnlineBanking.BL;
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<MockTransactionService>().As<ITransactionService>().SingleInstance();
+            builder.RegisterType<MockBankEntitiesService>().As<IBankEntitiesService>().SingleInstance();
         }
     }
 }

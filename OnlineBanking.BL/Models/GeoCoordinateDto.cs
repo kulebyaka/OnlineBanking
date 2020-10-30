@@ -1,4 +1,4 @@
-﻿namespace OnlineBanking.BL
+﻿namespace OnlineBanking.BL.Models
 {
     public class GeoCoordinateDto
     {
