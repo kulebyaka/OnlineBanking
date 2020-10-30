@@ -114,8 +114,6 @@ namespace OnlineBanking.API
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapHealthChecks(Constants.Health.EndPoint); 
             });
-
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
