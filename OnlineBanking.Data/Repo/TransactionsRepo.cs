@@ -3,75 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using OnlineBanking.Data.Models;
 
 namespace OnlineBanking.Data.Repo
 {
     public class TransactionsRepo : ITransactionsRepo
     {
-        readonly List<TransactionDb> TransactionDbs = new List<TransactionDb>()
+        public async Task<IEnumerable<Transaction>> Get(CancellationToken cancellationToken)
         {
-            new TransactionDb(1),
-            new TransactionDb(2)
-        };
-
-        public IQueryable<TransactionDb> Get()
-        {
-            return TransactionDbs.AsQueryable();
-        }
-
-        public TransactionDb GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void Create(TransactionDb p)
-        {
-            if (p == null)
-                throw new ArgumentNullException(nameof(p));
-
-            TransactionDbs.Add(p);
-        }
-
-        public void Delete(int id)
-        {
-            var p = TransactionDbs.FirstOrDefault(x => x.Id == id);
-            if (p == null)
+            using (var db = new BankAppContext())
             {
-                throw new KeyNotFoundException($"An object of a type '{nameof(TransactionDb)}' with the key '{id}' not found");
+                return await db.Transactions.ToListAsync();
             }
-
-            TransactionDbs.RemoveAll(x => x.Id == p.Id);
         }
 
-        public void Update(TransactionDb p)
+        public async Task<Transaction> GetById(int id, CancellationToken cancellationToken)
         {
-            if (p == null)
-                throw new ArgumentNullException(nameof(p));
-
-            var stored = TransactionDbs.FirstOrDefault(x => x.Id == p.Id);
-            if (stored == null)
+            using (var db = new BankAppContext())
             {
-                throw new KeyNotFoundException($"An object of a type '{nameof(TransactionDb)}' with the key '{p.Id}' not found");
+                return await db.Set<Transaction>()
+                    .FindAsync(new object[] { id }, cancellationToken);
             }
-
-            TransactionDbs.RemoveAll(x => x.Id == stored.Id);
-            TransactionDbs.Add(p);
+            
         }
-
-        public Task<IQueryable<TransactionDb>> GetByColumnName(string columnName, CancellationToken token = default)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
-    public class TransactionDb : IEntity
-    {
-        public TransactionDb(int i)
-        {
-            Id = i;
-        }
-
-        public int Id { get; }
     }
 }

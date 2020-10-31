@@ -1,13 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OnlineBanking.Data.Repo
 {
     public interface IRepository<T> where T : class, IEntity
     {
-        void Create(T e);
-        void Delete(int id);
-        IQueryable<T> Get();
-        T GetById(int id);
-        void Update(T e);
+        Task<IEnumerable<T>> Get(CancellationToken cancellationToken);
+        Task<T> GetById(int id, CancellationToken cancellationToken);
     }
 }
