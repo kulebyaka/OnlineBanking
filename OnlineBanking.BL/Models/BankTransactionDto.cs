@@ -1,19 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OnlineBanking.BL.Models
 {
-    public class BankTransactionDto
+    public partial class BankTransactionDto
     {
-        public int              Id             { get; set; }
-        public DateTime         Date           { get; set; }
-        public decimal          Change         { get; set; }
-        public string           Currency       { get; set; }
+        public int              TransactionId  { get; set; }
+        public DateTime         TxDate         { get; set; }
+        public int              Amount         { get; set; }
         public GeoCoordinateDto GeoCoordinate  { get; set; }
         public string           Brand          { get; set; }
-        public string           Category       { get; set; }
-        public int              CategoryId     { get; set; }
-        public string           Note           { get; set; }
+        public ECategory        Category       { get; set; }
+        public List<string> ShopTags           { get; set; }
+        public int ClientId                    { get; set; }
+        public EGender ClientGender            { get; set; }      
+        public int ClientYearOfBirth           { get; set; }            
+        public string MerchantUid              { get; set; }      
+        public string ShopUid                  { get; set; }          
+        public int ShopTypeId                  { get; set; }          
+        
 
+            
+        
+         
+         
+         
+         
+        
+          
+         
+         
+         
+        
+         
+         
     }
 }
 
