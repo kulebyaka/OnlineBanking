@@ -15,8 +15,8 @@ namespace OnlineBanking.Data.Models
         {
         }
 
-        public virtual DbSet<GeoPoints> GeoPoints { get; set; }
-        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Shop> Shop { get; set; }
+        public virtual DbSet<Transaction> Transaction { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,32 +29,48 @@ namespace OnlineBanking.Data.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GeoPoints>(entity =>
+            modelBuilder.Entity<Shop>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                    .HasName("geo_points_pk")
+                    .HasName("shops_pk")
                     .IsClustered(false);
 
-                entity.ToTable("geo_points");
+                entity.ToTable("shop");
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("geo_points_Id_uindex")
+                    .HasName("shops_id_uindex")
                     .IsUnique();
 
-                entity.Property(e => e.Latitude)
-                    .HasColumnName("latitude")
-                    .HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Longitude)
-                    .HasColumnName("longitude")
-                    .HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.Latitude).HasColumnName("latitude");
+
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
+
+                entity.Property(e => e.PragueId).HasColumnName("prague_id");
+
+                entity.Property(e => e.ShopUid)
+                    .IsRequired()
+                    .HasColumnName("shop_uid")
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Transaction>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Id)
+                    .HasName("transactions_pk")
+                    .IsClustered(false);
 
-                entity.ToTable("transactions");
+                entity.ToTable("transaction");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("transactions_transaction_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Amount).HasColumnName("amount");
 
@@ -65,8 +81,6 @@ namespace OnlineBanking.Data.Models
                 entity.Property(e => e.ClientYearOfBirth).HasColumnName("client_year_of_birth");
 
                 entity.Property(e => e.MerchantCategory).HasColumnName("merchant_category");
-
-                entity.Property(e => e.MerchantCategoryId).HasColumnName("merchant_category_id");
 
                 entity.Property(e => e.MerchantUid)
                     .HasColumnName("merchant_uid")
@@ -79,16 +93,16 @@ namespace OnlineBanking.Data.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ShopType)
+                    .IsRequired()
                     .HasColumnName("shop_type")
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ShopUid)
+                    .IsRequired()
                     .HasColumnName("shop_uid")
                     .HasMaxLength(250)
                     .IsUnicode(false);
-
-                entity.Property(e => e.Id).HasColumnName("transaction_id");
 
                 entity.Property(e => e.TxDate).HasColumnName("tx_date");
             });

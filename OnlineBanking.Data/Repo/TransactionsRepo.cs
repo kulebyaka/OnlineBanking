@@ -14,7 +14,7 @@ namespace OnlineBanking.Data.Repo
         {
             using (var db = new BankAppContext())
             {
-                return await db.Transactions.ToListAsync();
+                return await db.Set<Transaction>().ToListAsync();
             }
         }
 

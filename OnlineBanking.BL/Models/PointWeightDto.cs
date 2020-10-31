@@ -8,7 +8,7 @@
     
     public class DistrictWeightDto
     {
-        public int Value { get; set; }
+        public long Value { get; set; }
         public double Color { get; set; }
         public int DistrictId  { get; set; }
     }
