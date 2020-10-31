@@ -14,9 +14,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Autofac;
 using OnlineBanking.API.Configuration;
-using OnlineBanking.API.Configuration.AutofacModules;
 using OnlineBanking.API.Filters;
-
+using OnlineBanking.BL.AutofacModules;
+using AutoMapper;
 
 namespace OnlineBanking.API
 {
@@ -73,7 +73,7 @@ namespace OnlineBanking.API
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services
-                // .AddAutoMapper(typeof(Startup)) TODO[EK]: mapper
+                .AddAutoMapper(typeof(Startup)) 
                 .AddSwagger();
 
             services.AddRouting();

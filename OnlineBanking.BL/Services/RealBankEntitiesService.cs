@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Bogus;
 using OnlineBanking.BL.Models;
 using OnlineBanking.Data.Repo;
 
@@ -44,13 +43,17 @@ namespace OnlineBanking.BL.Services
 
         public async Task<IEnumerable<PointWeightDto>> GetDataByColumnName(string columnName, CancellationToken token = default)
         {
-            var x = await _transactionsRepo.GetByColumnName(columnName, token);
-            return x.AsEnumerable().Select(Mapper.Map<PointWeightDto>);
+            var x = await _transactionsRepo.Get(token);
+            return x.Select(Mapper.Map<PointWeightDto>);
         }
 
-        public Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
+        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var x = await _transactionsRepo.Get(token);
+            return x.Select(a=>new DistrictWeightDto()
+            {
+                  Value = a.Amount
+            });
         }
     }
 }
