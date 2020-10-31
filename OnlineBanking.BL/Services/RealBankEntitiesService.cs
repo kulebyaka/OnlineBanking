@@ -48,7 +48,7 @@ namespace OnlineBanking.BL.Services
             return x.AsEnumerable().Select(Mapper.Map<PointWeightDto>);
         }
 
-        public Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int categoryId, int? tagId, CancellationToken token = default)
+        public Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
             throw new NotImplementedException();
         }

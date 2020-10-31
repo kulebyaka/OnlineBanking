@@ -46,7 +46,7 @@ namespace OnlineBanking.BL.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int categoryId, int? tagId, CancellationToken token = default)
+        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
             var fakeTransactionRuleSet = FakerRuleSets.FakeAverageBillRuleSet();
             var transaction = fakeTransactionRuleSet.Generate(DistrictNumber);

@@ -18,7 +18,7 @@ namespace OnlineBanking.BL.Services
                     Longitude = f.Random.Double()
                 })
                 .RuleFor(u => u.Brand, f => f.Company.CompanyName())
-                .RuleFor(u => u.Category, f => f.PickRandom<ECategory>());
+                .RuleFor(u => u.Category, f => (int)f.PickRandom<ECategory>());
             return fakeTransactionRuleSet;
         }
         

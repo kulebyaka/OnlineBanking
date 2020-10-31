@@ -17,8 +17,6 @@ namespace OnlineBanking.API.Controllers
     {
         private readonly ILogger<TransactionsController> _logger;
         private readonly IBankEntitiesService _bankEntitiesService;
-
-
         public TransactionsController(ILogger<TransactionsController> logger, IBankEntitiesService bankEntitiesService)
         {
             this._bankEntitiesService = bankEntitiesService;
@@ -54,7 +52,7 @@ namespace OnlineBanking.API.Controllers
         [HttpGet("AverageBill/{categoryId}/{tagId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill([Required]int categoryId, int? tagId, CancellationToken token = default)
+        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
             var items = await _bankEntitiesService.GetAverageBill(categoryId, tagId, token);
             return items; //.MapWith<ItemDTO, ItemView>(mapper);
