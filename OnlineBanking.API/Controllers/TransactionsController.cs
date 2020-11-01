@@ -49,6 +49,7 @@ namespace OnlineBanking.API.Controllers
             var items = await _bankEntitiesService.GetDataByColumnName(columnName, cancellationToken);
             return items; //.MapWith<ItemDTO, ItemView>(mapper);
         }
+
         [HttpGet("AverageBill/{categoryId}/{tagId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -56,6 +57,15 @@ namespace OnlineBanking.API.Controllers
         {
             var items = await _bankEntitiesService.GetAverageBill(categoryId, tagId, token);
             return items; //.MapWith<ItemDTO, ItemView>(mapper);
+        }
+
+        [HttpGet("ReturnJSON")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
+        {
+            var items = await _bankEntitiesService.ReturnJSONForFrontend(token);
+            return items; //.MapWith<DsitrictsDescriptionDto, ItemView>(mapper);
         }
     }
 }

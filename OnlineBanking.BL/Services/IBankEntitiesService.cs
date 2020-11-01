@@ -9,5 +9,6 @@ namespace OnlineBanking.BL.Services
     {
         Task<IEnumerable<PointWeightDto>> GetDataByColumnName(string columnName, CancellationToken token = default);
         Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default);
+        Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default);
     }
 }

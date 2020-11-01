@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -6,18 +7,22 @@ using System.Threading.Tasks;
 using AutoMapper;
 using OnlineBanking.BL.Models;
 using OnlineBanking.Data.Repo;
+using Newtonsoft.Json;
+using OnlineBanking.Data.Models;
 
 namespace OnlineBanking.BL.Services
 {
     public class RealBankEntitiesService : IBankEntitiesService
     {
-        public RealBankEntitiesService(ITransactionsRepo transactionsRepo, IMapper mapper)
+        public RealBankEntitiesService(ITransactionsRepo transactionsRepo, IShopsRepo shopsRepo, IMapper mapper)
         {
             _transactionsRepo = transactionsRepo;
+            _shopsRepo = shopsRepo;
             Mapper = mapper;
         }
 
         ITransactionsRepo _transactionsRepo { get; }
+        IShopsRepo _shopsRepo { get; }
         IMapper Mapper { get; }
         
         public async Task<BankTransactionDto> GetTransactionAsync(int id, CancellationToken cancellationToken = default)
@@ -54,6 +59,25 @@ namespace OnlineBanking.BL.Services
             {
                   Value = a.Amount
             });
+        }
+
+        public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
+        {
+            var CurrentDirectory = Directory.GetCurrentDirectory();
+            Console.WriteLine(CurrentDirectory);
+            using (StreamReader r = new StreamReader("../OnlineBanking.Data/json/districts_geojson_tmp.json")) //todo: set proper dir and read file not in this function 
+            {
+                string json = r.ReadToEnd();
+                DistrictsDescriptionDto districtsDescription = JsonConvert.DeserializeObject<DistrictsDescriptionDto>(json);
+
+                var output = new DistrictsDescriptionDto {
+                    type = "Type",
+                    name = "BankApp",
+                    features = districtsDescription.features.Where(dist => dist.properties.ID < 2).ToList<Models.Feature>(),
+                    
+                };
+                return output;
+            }
         }
     }
 }

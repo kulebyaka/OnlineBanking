@@ -52,5 +52,10 @@ namespace OnlineBanking.BL.Services
             var transaction = fakeTransactionRuleSet.Generate(DistrictNumber);
             return transaction.ToList();
         }
+
+        public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

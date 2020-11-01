@@ -14,6 +14,7 @@ namespace OnlineBanking.BL.AutofacModules
         {
             builder.RegisterType<RealBankEntitiesService>().As<IBankEntitiesService>().SingleInstance();
             builder.RegisterType<TransactionsRepo>().As<ITransactionsRepo>().SingleInstance();
+            builder.RegisterType<ShopsRepo>().As<IShopsRepo>().SingleInstance();
         }
     }
 }
