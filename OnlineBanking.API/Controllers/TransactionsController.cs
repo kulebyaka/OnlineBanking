@@ -69,7 +69,7 @@ namespace OnlineBanking.API.Controllers
         }
         
         
-        [HttpGet("AverageBill/{categoryId}/{tagId}")]
+        [HttpGet("CreditWorthiness/{categoryId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<DistrictsDescriptionDto> GetCreditWorthiness(int? categoryId, string tags, CancellationToken token = default)
