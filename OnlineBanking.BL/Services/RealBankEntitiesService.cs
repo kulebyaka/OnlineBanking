@@ -51,7 +51,7 @@ namespace OnlineBanking.BL.Services
         public async Task<IEnumerable<PointWeightDto>> GetDataByColumnName(string columnName, CancellationToken token = default)
         {
             var x = await _transactionsRepo.Get(token);
-            return x.Select(Mapper.Map<PointWeightDto>);
+            return x.Select(_mapper.Map<PointWeightDto>);
         }
 
         public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
