@@ -16,6 +16,7 @@ namespace OnlineBanking.Data.Models
         }
 
         public virtual DbSet<BankTransaction> BankTransaction { get; set; }
+        public virtual DbSet<DistrictCategoryTag> DistrictCategoryTag { get; set; }
         public virtual DbSet<Shop> Shop { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,9 +38,17 @@ namespace OnlineBanking.Data.Models
 
                 entity.ToTable("bank_transaction");
 
+                entity.HasIndex(e => e.Amount);
+
+                entity.HasIndex(e => e.ClientId);
+
                 entity.HasIndex(e => e.Id)
                     .HasName("transactions_transaction_id_uindex")
                     .IsUnique();
+
+                entity.HasIndex(e => e.ShopTags);
+
+                entity.HasIndex(e => e.ShopUid);
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -80,6 +89,35 @@ namespace OnlineBanking.Data.Models
                 entity.Property(e => e.TxDate).HasColumnName("tx_date");
             });
 
+            modelBuilder.Entity<DistrictCategoryTag>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("district_category_tag_pk")
+                    .IsClustered(false);
+
+                entity.ToTable("district_category_tag");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("district_category_tag_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DistrictId).HasColumnName("district_id");
+
+                entity.Property(e => e.MeanAmount).HasColumnName("mean_amount");
+
+                entity.Property(e => e.MeanUserAmount).HasColumnName("mean_user_amount");
+
+                entity.Property(e => e.MedianAmount).HasColumnName("median_amount");
+
+                entity.Property(e => e.Num).HasColumnName("num");
+
+                entity.Property(e => e.TagId).HasColumnName("tag_id");
+
+                entity.Property(e => e.UserNum).HasColumnName("user_num");
+            });
+
             modelBuilder.Entity<Shop>(entity =>
             {
                 entity.HasKey(e => e.Id)
@@ -90,6 +128,13 @@ namespace OnlineBanking.Data.Models
 
                 entity.HasIndex(e => e.Id)
                     .HasName("shops_id_uindex")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.PragueId)
+                    .HasName("IX_ICO");
+
+                entity.HasIndex(e => e.ShopUid)
+                    .HasName("IX_shop_uid")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
