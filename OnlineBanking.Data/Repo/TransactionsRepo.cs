@@ -27,5 +27,24 @@ namespace OnlineBanking.Data.Repo
             }
             
         }
+
+        public async Task<IEnumerable<BankTransaction>> GetByFilter(int? categoryId, string tags)
+        {
+            using (var db = new BankAppContext())
+            {
+                return await db.Set<BankTransaction>()
+                    .Where(a=>a.ShopTags.Contains(tags)).ToListAsync(); 
+            }
+        }
+
+        public async Task<double> GetAverageAgeByFilter(int? categoryId, string tags)
+        {
+            using (var db = new BankAppContext())
+            {
+                var x = await db.Set<BankTransaction>()
+                    .Where(a=>a.ShopTags.Contains(tags)).AverageAsync(x => x.Amount);
+                return x;
+            }
+        }
     }
 }

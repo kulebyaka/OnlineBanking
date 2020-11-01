@@ -55,5 +55,10 @@ namespace OnlineBanking.BL.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<DistrictsDescriptionDto> GetCreditWorthiness(int? categoryId, string tags, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

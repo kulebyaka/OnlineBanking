@@ -24,6 +24,7 @@ namespace OnlineBanking.BL.Models
         public int ID_POSKYT { get; set; } 
         public string STAV_ZMENA { get; set; }
         public long Value { get; set; } // value to be populated
+        public decimal DecimalValue { get; set; } // value to be populated
         public string NAZEV_1 { get; set; } 
         public double Shape_Length { get; set; } 
         public double Shape_Area { get; set; } 

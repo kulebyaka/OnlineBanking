@@ -69,5 +69,15 @@ namespace OnlineBanking.API.Controllers
         }
         
         
+        [HttpGet("AverageBill/{categoryId}/{tagId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<DistrictsDescriptionDto> GetCreditWorthiness(int? categoryId, string tags, CancellationToken token = default)
+        {
+            var items = await _bankEntitiesService.GetCreditWorthiness(categoryId, tags, token);
+            return items; 
+        }
+        
+        
     }
 }
