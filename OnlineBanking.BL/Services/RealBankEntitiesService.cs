@@ -14,16 +14,19 @@ namespace OnlineBanking.BL.Services
 {
     public class RealBankEntitiesService : IBankEntitiesService
     {
-        public RealBankEntitiesService(ITransactionsRepo transactionsRepo, IShopsRepo shopsRepo, IMapper mapper)
+
+        public RealBankEntitiesService(ITransactionsRepo transactionsRepo, IShopsRepo shopsRepo, IDistrictStatisticsRepo districtStatisticsRepo, IMapper mapper)
         {
             _transactionsRepo = transactionsRepo;
             _shopsRepo = shopsRepo;
-            Mapper = mapper;
+            _districtStatisticsRepo = districtStatisticsRepo;
+            _mapper = mapper;
         }
 
-        ITransactionsRepo _transactionsRepo { get; }
-        IShopsRepo _shopsRepo { get; }
-        IMapper Mapper { get; }
+        private IDistrictStatisticsRepo _districtStatisticsRepo;
+        private readonly ITransactionsRepo _transactionsRepo;
+        private readonly IShopsRepo _shopsRepo;
+        private readonly IMapper _mapper;
         
         public async Task<BankTransactionDto> GetTransactionAsync(int id, CancellationToken cancellationToken = default)
         {
@@ -49,7 +52,7 @@ namespace OnlineBanking.BL.Services
         public async Task<IEnumerable<PointWeightDto>> GetDataByColumnName(string columnName, CancellationToken token = default)
         {
             var x = await _transactionsRepo.Get(token);
-            return x.Select(Mapper.Map<PointWeightDto>);
+            return x.Select(_mapper.Map<PointWeightDto>);
         }
 
         public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
@@ -58,6 +61,16 @@ namespace OnlineBanking.BL.Services
             return x.Select(a=>new DistrictWeightDto()
             {
                   Value = a.Amount
+            });
+        }
+        
+        public async Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, List<int> tags, CancellationToken token = default)
+        {
+            var x = _districtStatisticsRepo.GetDistrictStatistics();
+
+            return x.Select(a => new DistrictWeightDto()
+            {
+                Color = a.MedianAmount
             });
         }
 
