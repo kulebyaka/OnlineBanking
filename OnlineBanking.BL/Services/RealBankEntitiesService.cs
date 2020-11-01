@@ -8,7 +8,6 @@ using AutoMapper;
 using OnlineBanking.BL.Models;
 using OnlineBanking.Data.Repo;
 using Newtonsoft.Json;
-using OnlineBanking.Data.Models;
 
 namespace OnlineBanking.BL.Services
 {
@@ -61,10 +60,10 @@ namespace OnlineBanking.BL.Services
            return await  _transactionsRepo.GetAverageAgeByFilter(categoryId, "178, 242");
         }
         
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, IEnumerable<int> tags, CancellationToken token = default)
+        public async Task<IEnumerable<DistrictsDescriptionDto>> GetAverageAge(int? categoryId, IEnumerable<int> tags, CancellationToken token = default)
         {
             var x = await this.GetAverageAgeFromDb(categoryId, tags);
-            return new[] {new DistrictWeightDto()};
+            return new[] {new DistrictsDescriptionDto()};
         }
 
         public async Task<DistrictsDescriptionDto> GetCreditWorthiness(int? categoryId, string tags, CancellationToken token)
@@ -92,11 +91,6 @@ namespace OnlineBanking.BL.Services
 
         public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
-            /*var x = await _transactionsRepo.Get(token);
-            return x.Select(a=>new DistrictWeightDto()
-            {
-                  Value = a.Amount
-            });*/
 
             using (StreamReader r = new StreamReader("../OnlineBanking.Data/json/districts_geojson_tmp.json")) //todo: set proper dir and read file not in this function 
             {

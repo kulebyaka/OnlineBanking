@@ -62,7 +62,7 @@ namespace OnlineBanking.API.Controllers
         [HttpGet("AverageAge/{categoryId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, string tags = null, CancellationToken token = default)
+        public async Task<IEnumerable<DistrictsDescriptionDto>> GetAverageAge(int? categoryId, string tags = null, CancellationToken token = default)
         {
             var items = await _bankEntitiesService.GetAverageAge(categoryId, null, token);
             return items;
@@ -77,7 +77,5 @@ namespace OnlineBanking.API.Controllers
             var items = await _bankEntitiesService.GetCreditWorthiness(categoryId, tags, token);
             return items; 
         }
-        
-        
     }
 }
