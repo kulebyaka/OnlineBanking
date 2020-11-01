@@ -15,54 +15,27 @@ namespace OnlineBanking.Data.Models
         {
         }
 
+        public virtual DbSet<BankTransaction> BankTransaction { get; set; }
         public virtual DbSet<Shop> Shop { get; set; }
-        public virtual DbSet<Transaction> Transaction { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Data Source=localhost;Database=BankApp;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:kulebyaka-server-name.database.windows.net,1433;Database=BankApp;User ID=kulebyaka;Password=Dc&W5bX9%f9kDE");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Shop>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                    .HasName("shops_pk")
-                    .IsClustered(false);
-
-                entity.ToTable("shop");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("shops_id_uindex")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Latitude).HasColumnName("latitude");
-
-                entity.Property(e => e.Longitude).HasColumnName("longitude");
-
-                entity.Property(e => e.PragueId).HasColumnName("prague_id");
-
-                entity.Property(e => e.ShopUid)
-                    .IsRequired()
-                    .HasColumnName("shop_uid")
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Transaction>(entity =>
+            modelBuilder.Entity<BankTransaction>(entity =>
             {
                 entity.HasKey(e => e.Id)
                     .HasName("transactions_pk")
                     .IsClustered(false);
 
-                entity.ToTable("transaction");
+                entity.ToTable("bank_transaction");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("transactions_transaction_id_uindex")
@@ -105,6 +78,33 @@ namespace OnlineBanking.Data.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.TxDate).HasColumnName("tx_date");
+            });
+
+            modelBuilder.Entity<Shop>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .HasName("shops_pk")
+                    .IsClustered(false);
+
+                entity.ToTable("shop");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("shops_id_uindex")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Latitude).HasColumnName("latitude");
+
+                entity.Property(e => e.Longitude).HasColumnName("longitude");
+
+                entity.Property(e => e.PragueId).HasColumnName("prague_id");
+
+                entity.Property(e => e.ShopUid)
+                    .IsRequired()
+                    .HasColumnName("shop_uid")
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

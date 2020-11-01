@@ -1,6 +1,6 @@
 ﻿namespace OnlineBanking.Data.Models
 {
-    public partial class Transaction:IEntity
+    public partial class BankTransaction:IEntity
     {
         
     }

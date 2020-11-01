@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace OnlineBanking.Data.Models
 {
-    public partial class Transaction
+    public partial class BankTransaction
     {
         public int Id { get; set; }
         public DateTime TxDate { get; set; }

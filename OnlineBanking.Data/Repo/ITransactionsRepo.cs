@@ -5,7 +5,7 @@ using OnlineBanking.Data.Models;
 
 namespace OnlineBanking.Data.Repo
 {
-    public interface ITransactionsRepo : IRepository<Transaction>
+    public interface ITransactionsRepo : IRepository<BankTransaction>
     {
     }
 }

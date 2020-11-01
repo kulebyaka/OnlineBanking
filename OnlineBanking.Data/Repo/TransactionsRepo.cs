@@ -10,19 +10,19 @@ namespace OnlineBanking.Data.Repo
 {
     public class TransactionsRepo : ITransactionsRepo
     {
-        public async Task<IEnumerable<Transaction>> Get(CancellationToken cancellationToken)
+        public async Task<IEnumerable<BankTransaction>> Get(CancellationToken cancellationToken)
         {
             using (var db = new BankAppContext())
             {
-                return await db.Set<Transaction>().ToListAsync();
+                return await db.Set<BankTransaction>().ToListAsync();
             }
         }
 
-        public async Task<Transaction> GetById(int id, CancellationToken cancellationToken)
+        public async Task<BankTransaction> GetById(int id, CancellationToken cancellationToken)
         {
             using (var db = new BankAppContext())
             {
-                return await db.Set<Transaction>()
+                return await db.Set<BankTransaction>()
                     .FindAsync(new object[] { id }, cancellationToken);
             }
             
