@@ -47,7 +47,7 @@ namespace OnlineBanking.API.Controllers
         public async Task<IEnumerable<PointWeightDto>> GetByColumn([Required]string columnName, CancellationToken cancellationToken = default)
         {
             var items = await _bankEntitiesService.GetDataByColumnName(columnName, cancellationToken);
-            return items; //.MapWith<ItemDTO, ItemView>(mapper);
+            return items;
         }
 
         [HttpGet("AverageBill/{categoryId}/{tagId}")]
@@ -56,7 +56,18 @@ namespace OnlineBanking.API.Controllers
         public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
             var items = await _bankEntitiesService.GetAverageBill(categoryId, tagId, token);
-            return items; //.MapWith<DsitrictsDescriptionDto, ItemView>(mapper);
+            return items; 
         }
+        
+        [HttpGet("AverageAge/{categoryId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, string tags = null, CancellationToken token = default)
+        {
+            var items = await _bankEntitiesService.GetAverageAge(categoryId, null, token);
+            return items;
+        }
+        
+        
     }
 }

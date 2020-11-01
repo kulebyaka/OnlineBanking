@@ -50,5 +50,10 @@ namespace OnlineBanking.BL.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, IEnumerable<int> tags, CancellationToken token = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

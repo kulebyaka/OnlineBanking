@@ -53,6 +53,15 @@ namespace OnlineBanking.BL.Services
             var x = await _transactionsRepo.Get(token);
             return x.Select(_mapper.Map<PointWeightDto>);
         }
+        
+        public async Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, IEnumerable<int> tags, CancellationToken token = default)
+        {
+            var x = _districtStatisticsRepo.GetDistrictStatistics();
+            return x.Select(a => new DistrictWeightDto()
+            {
+                Color = a.MedianAmount
+            });
+        }
 
         public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
@@ -82,25 +91,6 @@ namespace OnlineBanking.BL.Services
                 return output;
             }
 
-        }
-
-        public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
-        {
-            var CurrentDirectory = Directory.GetCurrentDirectory();
-            Console.WriteLine(CurrentDirectory);
-            using (StreamReader r = new StreamReader("../OnlineBanking.Data/json/districts_geojson_tmp.json")) //todo: set proper dir and read file not in this function 
-            {
-                string json = r.ReadToEnd();
-                DistrictsDescriptionDto districtsDescription = JsonConvert.DeserializeObject<DistrictsDescriptionDto>(json);
-
-                var output = new DistrictsDescriptionDto {
-                    type = "Type",
-                    name = "BankApp",
-                    features = districtsDescription.features.Where(dist => dist.properties.ID < 2).ToList<Models.Feature>(),
-                    
-                };
-                return output;
-            }
         }
     }
 }
