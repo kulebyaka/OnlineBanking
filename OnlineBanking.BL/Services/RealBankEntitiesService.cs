@@ -8,6 +8,7 @@ using AutoMapper;
 using OnlineBanking.BL.Models;
 using OnlineBanking.Data.Repo;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 using OnlineBanking.Data.Models;
 
 namespace OnlineBanking.BL.Services
@@ -52,32 +53,34 @@ namespace OnlineBanking.BL.Services
             return x.Select(Mapper.Map<PointWeightDto>);
         }
 
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
+        public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
-            var x = await _transactionsRepo.Get(token);
+            /*var x = await _transactionsRepo.Get(token);
             return x.Select(a=>new DistrictWeightDto()
             {
                   Value = a.Amount
-            });
-        }
+            });*/
 
-        public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
-        {
-            var CurrentDirectory = Directory.GetCurrentDirectory();
-            Console.WriteLine(CurrentDirectory);
             using (StreamReader r = new StreamReader("../OnlineBanking.Data/json/districts_geojson_tmp.json")) //todo: set proper dir and read file not in this function 
             {
                 string json = r.ReadToEnd();
                 DistrictsDescriptionDto districtsDescription = JsonConvert.DeserializeObject<DistrictsDescriptionDto>(json);
+                
+                Random rnd = new Random();
+                long value  = rnd.Next(0, 1001);
+                districtsDescription.features.ForEach(dists => dists.properties.Value = value);
+
+                districtsDescription.features.First(dists => dists.properties.ID == 0).properties.Value = 700;
+                districtsDescription.features.First(dists => dists.properties.ID == 1).properties.Value = 700;
 
                 var output = new DistrictsDescriptionDto {
                     type = "Type",
                     name = "BankApp",
-                    features = districtsDescription.features.Where(dist => dist.properties.ID < 2).ToList<Models.Feature>(),
-                    
+                    features = districtsDescription.features
                 };
                 return output;
             }
+
         }
     }
 }

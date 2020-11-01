@@ -53,18 +53,9 @@ namespace OnlineBanking.API.Controllers
         [HttpGet("AverageBill/{categoryId}/{tagId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
+        public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
             var items = await _bankEntitiesService.GetAverageBill(categoryId, tagId, token);
-            return items; //.MapWith<ItemDTO, ItemView>(mapper);
-        }
-
-        [HttpGet("ReturnJSON")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
-        {
-            var items = await _bankEntitiesService.ReturnJSONForFrontend(token);
             return items; //.MapWith<DsitrictsDescriptionDto, ItemView>(mapper);
         }
     }
