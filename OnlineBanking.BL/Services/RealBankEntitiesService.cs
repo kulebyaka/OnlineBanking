@@ -14,7 +14,6 @@ namespace OnlineBanking.BL.Services
 {
     public class RealBankEntitiesService : IBankEntitiesService
     {
-
         public RealBankEntitiesService(ITransactionsRepo transactionsRepo, IShopsRepo shopsRepo, IDistrictStatisticsRepo districtStatisticsRepo, IMapper mapper)
         {
             _transactionsRepo = transactionsRepo;
@@ -52,26 +51,37 @@ namespace OnlineBanking.BL.Services
         public async Task<IEnumerable<PointWeightDto>> GetDataByColumnName(string columnName, CancellationToken token = default)
         {
             var x = await _transactionsRepo.Get(token);
-            return x.Select(_mapper.Map<PointWeightDto>);
+            return x.Select(Mapper.Map<PointWeightDto>);
         }
 
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
+        public async Task<DistrictsDescriptionDto> GetAverageBill(int? categoryId, int? tagId, CancellationToken token = default)
         {
-            var x = await _transactionsRepo.Get(token);
+            /*var x = await _transactionsRepo.Get(token);
             return x.Select(a=>new DistrictWeightDto()
             {
                   Value = a.Amount
-            });
-        }
-        
-        public async Task<IEnumerable<DistrictWeightDto>> GetAverageAge(int? categoryId, List<int> tags, CancellationToken token = default)
-        {
-            var x = _districtStatisticsRepo.GetDistrictStatistics();
+            });*/
 
-            return x.Select(a => new DistrictWeightDto()
+            using (StreamReader r = new StreamReader("../OnlineBanking.Data/json/districts_geojson_tmp.json")) //todo: set proper dir and read file not in this function 
             {
-                Color = a.MedianAmount
-            });
+                string json = r.ReadToEnd();
+                DistrictsDescriptionDto districtsDescription = JsonConvert.DeserializeObject<DistrictsDescriptionDto>(json);
+                
+                Random rnd = new Random();
+                long value  = rnd.Next(0, 1001);
+                districtsDescription.features.ForEach(dists => dists.properties.Value = value);
+
+                districtsDescription.features.First(dists => dists.properties.ID == 0).properties.Value = 700;
+                districtsDescription.features.First(dists => dists.properties.ID == 1).properties.Value = 700;
+
+                var output = new DistrictsDescriptionDto {
+                    type = "Type",
+                    name = "BankApp",
+                    features = districtsDescription.features
+                };
+                return output;
+            }
+
         }
 
         public async Task<DistrictsDescriptionDto> ReturnJSONForFrontend(CancellationToken token = default)
